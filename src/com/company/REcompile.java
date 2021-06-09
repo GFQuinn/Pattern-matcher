@@ -12,14 +12,25 @@ public class REcompile {
         REfiniteStateMachine startingFSM = new REfiniteStateMachine(currentStateNumber);
         currentStateNumber++;
         REfiniteStateMachine finishedFSM = expression(startingFSM);
+        finishedFSM.addFinishState(currentStateNumber);
+        currentStateNumber++;
         finishedFSM.dump();
     }
 
     private static REfiniteStateMachine expression(REfiniteStateMachine startingFSM) throws Exception {
         if (pattern.charAt(currentIndex) == '|' && currentIndex != 0) {
             currentIndex++;
-            return startingFSM;
 
+            REfiniteStateMachine newFSM = new REfiniteStateMachine(currentStateNumber);
+            currentStateNumber++;
+
+            newFSM =  expression(newFSM);
+            REfiniteStateMachine alternationFSM = new REfiniteStateMachine(currentStateNumber);
+            currentStateNumber++;
+
+            currentStateNumber = alternationFSM.alternation(newFSM,startingFSM, currentStateNumber);
+
+            return alternationFSM;
         }
         else if(pattern.charAt(currentIndex) == ')')
         {
@@ -39,7 +50,7 @@ public class REcompile {
             startingFSM = term(startingFSM);
             if (pattern.length() == currentIndex) {
 
-                startingFSM.addFinishState(currentStateNumber);
+
                 return startingFSM;
             } else {
                 REfiniteStateMachine TE = expression(startingFSM);

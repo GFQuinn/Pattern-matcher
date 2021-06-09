@@ -120,8 +120,35 @@ public class REfiniteStateMachine {
         return stateNumber;
     }
 
+    public int alternation(REfiniteStateMachine fsmToAddOne, REfiniteStateMachine fsmToAddTwo, int stateNumber){
 
+        REstate fsmOneStart = fsmToAddOne.getStartState();
+        REstate fsmOneFinish = fsmToAddOne.getFinishState();
 
+        REstate fsmTwoStart = fsmToAddTwo.getStartState();
+        REstate fsmTwoFinish = fsmToAddTwo.getFinishState();
+
+        //create the new Branching states
+        REstateBranching firstBranching = new REstateBranching(stateNumber);
+        stateNumber++;
+        REstateBranching secondBranching = new REstateBranching(stateNumber);
+        stateNumber++;
+
+        fsmOneFinish.setBothNextStates(secondBranching.getStateNumber());
+        fsmTwoFinish.setBothNextStates(secondBranching.getStateNumber());
+
+        firstBranching.setNextStateOne(fsmOneStart.getStateNumber());
+        firstBranching.setNextStatetwo(fsmTwoStart.getStateNumber());
+
+        finishState.setBothNextStates(firstBranching.getStateNumber());
+
+        states.add(firstBranching);
+        states.addAll(fsmToAddOne.states);
+        states.addAll(fsmToAddTwo.states);
+        states.add(secondBranching);
+        finishState = secondBranching;
+        return stateNumber;
+    }
 
     public void addFinishState(int stateNumber)
     {
