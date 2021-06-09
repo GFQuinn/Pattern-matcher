@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class REcompilerFiniteStateMachine {
@@ -184,6 +185,16 @@ public class REcompilerFiniteStateMachine {
 
     public REstate getStartState() {
         return startState;
+    }
+
+    public void printToStream()
+    {
+        PrintStream printer = new PrintStream(System.out);
+        for (REstate state: states) {
+
+         String attributes = state.getAttributes();
+            printer.println(attributes);
+        }
     }
 
     public void dump()

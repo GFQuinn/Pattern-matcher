@@ -10,6 +10,7 @@ public class REsearchFiniteStateMachine {
 
     public void addState(String[] attributes)
     {
+        System.out.println(attributes[0]+attributes[1]+attributes[2]);
         //if the length is 3 it has to be a branching state
         if(attributes.length == 3)
         {
@@ -21,7 +22,7 @@ public class REsearchFiniteStateMachine {
             fsm.add(branchingState);
         }
         //only finishing state has next state as -1
-        else if( Integer.valueOf(attributes[0]) == -1)
+        else if( (attributes[0]).charAt(0) == -1)
         {
             int stateNumber = Integer.valueOf(attributes[1]);
             int nextStateOne = Integer.valueOf(attributes[2]);
@@ -49,6 +50,7 @@ public class REsearchFiniteStateMachine {
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
             REstateMatching matchingState = new REstateMatching(stateNumber, character, nextStateOne, nextStateTwo);
+            fsm.add(matchingState);
         }
     }
     public void dump()

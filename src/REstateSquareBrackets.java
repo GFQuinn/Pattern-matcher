@@ -15,4 +15,15 @@ public class REstateSquareBrackets extends REstate{
     public void dump() {
         System.out.println(stateNumber + "   " +choices + "   " + nextStateOne + "    " + nextStatetwo);
     }
+    @Override
+    public String getAttributes() {
+        String attributesOne = choices;
+        String attributesTwo = String.valueOf(stateNumber);
+        String attributesThree = String.valueOf(nextStateOne);
+        String attributesFour = String.valueOf(nextStatetwo);
+
+        String attributes = attributesOne + null + attributesTwo + null + attributesThree + null + attributesFour;
+        return attributes;
+    }
+
 }

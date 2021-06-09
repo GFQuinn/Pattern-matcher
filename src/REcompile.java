@@ -12,7 +12,9 @@ public class REcompile {
         REcompilerFiniteStateMachine finishedFSM = expression(startingFSM);
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
-        finishedFSM.dump();
+        //finishedFSM.dump();
+        finishedFSM.printToStream();
+
     }
 
     private static REcompilerFiniteStateMachine expression(REcompilerFiniteStateMachine startingFSM) throws Exception {

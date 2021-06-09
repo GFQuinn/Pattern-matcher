@@ -6,6 +6,8 @@ public abstract class REstate {
     REstate(int stateNumber, int nextStateOne, int nextStatetwo)
     {
         this.stateNumber = stateNumber;
+        this.nextStateOne = nextStateOne;
+        this.nextStatetwo = nextStatetwo;
 
     }
     REstate(int stateNumber)
@@ -15,14 +17,6 @@ public abstract class REstate {
 
     public int getStateNumber() {
         return stateNumber;
-    }
-
-    public int getNextStateOne() {
-        return nextStateOne;
-    }
-
-    public int getNextStatetwo() {
-        return nextStatetwo;
     }
 
     public void setNextStateOne(int nextStateOne) {
@@ -39,4 +33,8 @@ public abstract class REstate {
     }
 
     public abstract void dump();
+
+    public abstract String getAttributes();
+
+
 }

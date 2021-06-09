@@ -16,7 +16,7 @@ public class REsearch {
         String currentLine;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<String[]> fsmString = new ArrayList<String[]>();
-        char spliter = (char) 3;
+        Character spliter = null;
         try {
             reader = new BufferedReader(new InputStreamReader(System.in));
             while ((currentLine = reader.readLine()) != "") {
@@ -24,7 +24,8 @@ public class REsearch {
                 fsmString.add(attributes);
             }
         } catch (Exception e) {
-            System.err.println(e);
+
+
         }
         return fsmString;
     }
