@@ -8,13 +8,7 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
-
-        fsm.dump();
-
-
-
-
-
+        //fsm.dump();
     }
 
     private static ArrayList<String[]> readInputFSM() {
@@ -29,18 +23,11 @@ public class REsearch {
                 fsmString.add(attributes);
             }
         } catch (Exception e) {
-
-
         }
         return fsmString;
     }
-
-
     public static REsearchFiniteStateMachine parseFiniteStateMachine(ArrayList<String[]> inputStrings) {
-        REsearchFiniteStateMachine fsm = new REsearchFiniteStateMachine();
-        for (String[] attributes : inputStrings) {
-            fsm.addState(attributes);
-        }
+        REsearchFiniteStateMachine fsm = new REsearchFiniteStateMachine(inputStrings);
         return fsm;
     }
 

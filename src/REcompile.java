@@ -59,8 +59,6 @@ public class REcompile {
             //startingFSM.appendFiniteStateMachine(term(startingFSM));
             startingFSM = term(startingFSM);
             if (pattern.length() == currentIndex) {
-
-
                 return startingFSM;
             } else {
                 REcompilerFiniteStateMachine TE = expression(startingFSM);
@@ -168,7 +166,6 @@ public class REcompile {
         }
         else
         {
-
             //current char must be invalid throw error
             throw new Exception("Invalid expression, invalid char at " + currentIndex);
         }

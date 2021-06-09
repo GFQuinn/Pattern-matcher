@@ -17,8 +17,8 @@ public class REstateMatching extends REstate{
     }
     @Override
     public String getAttributes() {
-        String attributesOne = character.toString();
-        String attributesTwo = String.valueOf(stateNumber);
+        String attributesOne = String.valueOf(stateNumber);
+        String attributesTwo = character.toString();
         String attributesThree = String.valueOf(nextStateOne);
         String attributesFour = String.valueOf(nextStatetwo);
 

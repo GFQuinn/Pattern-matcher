@@ -2,13 +2,21 @@ import java.util.ArrayList;
 
 public class REsearchFiniteStateMachine {
 
-    ArrayList<REstate> fsm;
+    private int startingState;
+    REstate[] fsm;
 
-    REsearchFiniteStateMachine(){
-        fsm = new ArrayList<>();
+    REsearchFiniteStateMachine(ArrayList<String[]> inputStrings){
+        int length = inputStrings.size();
+        fsm = new REstate[length];
+        startingState = Integer.valueOf(inputStrings.get(0)[0]);
+
+        for (String[] attributes:inputStrings)
+        {
+            int stateNumber = Integer.valueOf(attributes[0]);
+            fsm[stateNumber] = addState(attributes);
+        }
     }
-
-    public void addState(String[] attributes)
+    public REstate addState(String[] attributes)
     {
         //if the length is 3 it has to be a branching state
         if(attributes.length == 3)
@@ -18,20 +26,20 @@ public class REsearchFiniteStateMachine {
             int nextStateTwo = Integer.valueOf(attributes[2]);
 
             REstateBranching branchingState = new REstateBranching(stateNumber, nextStateOne, nextStateTwo);
-            fsm.add(branchingState);
+            return branchingState;
         }
         //only finishing state has next state as -1
-        else if( (attributes[0]).charAt(0) == -1)
+        else if( (attributes[1]).charAt(0) == -1)
         {
-            int stateNumber = Integer.valueOf(attributes[1]);
+            int stateNumber = Integer.valueOf(attributes[0]);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
 
             REstateFinish finshingState = new REstateFinish(stateNumber, nextStateOne, nextStateTwo);
-            fsm.add(finshingState);
+            return finshingState;
         }
         //if the matching string is not a char it must be a square bracket state
-        else if (attributes[0].length() > 1)
+        else if (attributes[1].length() > 1)
         {
             String options = attributes[0];
             int stateNumber = Integer.valueOf(attributes[1]);
@@ -39,17 +47,17 @@ public class REsearchFiniteStateMachine {
             int nextStateTwo = Integer.valueOf(attributes[3]);
 
             REstateSquareBrackets squareBracketState = new REstateSquareBrackets(stateNumber, options, nextStateOne, nextStateTwo);
-            fsm.add(squareBracketState);
+            return squareBracketState;
         }
-        //else its a matching state
+        //else its a matching state. Square bracket states with length 1 are treated as matching states.
         else
         {
-            Character character = attributes[0].charAt(0);
-            int stateNumber = Integer.valueOf(attributes[1]);
+            int stateNumber = Integer.valueOf(attributes[0]);
+            Character character = attributes[1].charAt(0);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
             REstateMatching matchingState = new REstateMatching(stateNumber, character, nextStateOne, nextStateTwo);
-            fsm.add(matchingState);
+            return matchingState;
         }
     }
     public void dump()
@@ -58,7 +66,4 @@ public class REsearchFiniteStateMachine {
             state.dump();
         }
     }
-
-
-
 }

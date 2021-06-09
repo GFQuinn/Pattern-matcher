@@ -20,7 +20,6 @@ public class REstateBranching extends REstate{
         String attributesTwo = String.valueOf(nextStateOne);
         String attributesThree = String.valueOf(nextStatetwo);
 
-
         String attributes = attributesOne + null + attributesTwo + null + attributesThree;
         return attributes;
     }
