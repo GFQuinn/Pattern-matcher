@@ -8,6 +8,12 @@ public class REfiniteStateMachine {
     private REstate finishState;
     private ArrayList<REstate> states;
 
+    REfiniteStateMachine()
+    {
+        states = new ArrayList<REstate>();
+    }
+
+
     REfiniteStateMachine(int stateNumber)
     {
         REstateBranching staringtState = new REstateBranching(stateNumber);
@@ -43,8 +49,9 @@ public class REfiniteStateMachine {
         stateNumber++;
 
         //point first branching to startstate of fsmToAdd and second Branching
-        firstBranching.setNextStateOne(fsmToAdd.getStartState().getStateNumber());
+        firstBranching.setNextStateOne(secondBranching.getStateNumber());
         firstBranching.setNextStatetwo(secondBranching.getStateNumber());
+
 
         //point fsmtoAdd to its start and second branching state
         REstate closureFinishing = fsmToAdd.getFinishState();
@@ -52,13 +59,68 @@ public class REfiniteStateMachine {
         closureFinishing.setNextStateOne(closureStart.getStateNumber());
         closureFinishing.setNextStatetwo(secondBranching.getStateNumber());
 
+        finishState.setNextStateOne(closureStart.getStateNumber());
+        finishState.setNextStatetwo(firstBranching.getStateNumber());
+
         //add all the states and point finish to secondBranching
-        states.addAll(fsmToAdd.getStates());
+        this.appendFiniteStateMachine(fsmToAdd);
         states.add(firstBranching);
         states.add(secondBranching);
         finishState = secondBranching;
         return stateNumber;
     }
+
+    public int plus(REfiniteStateMachine fsmToAdd, int stateNumber){
+        //add new state to be the finishing state
+        REstateBranching branching = new REstateBranching(stateNumber);
+        stateNumber++;
+
+        //get the start and finish from the fsmToAdd
+        REstate plusStart = fsmToAdd.getStartState();
+        REstate plusFinish = fsmToAdd.getFinishState();
+
+        //set the current finishing state to point to the fsmToAdd
+        finishState.setBothNextStates(plusStart.getStateNumber());
+
+        //set the fsmToAdd finish to point to its start and branching state
+        plusFinish.setNextStateOne(plusStart.getStateNumber());
+        plusFinish.setNextStatetwo(branching.getStateNumber());
+
+        //append the two finite states and add the branching state to the end
+        this.appendFiniteStateMachine(fsmToAdd);
+        states.add(branching);
+        finishState = branching;
+
+        return stateNumber;
+    }
+
+    public int questionMark(REfiniteStateMachine fsmToAdd, int stateNumber)
+    {
+        //create the new Branching states
+        REstateBranching firstBranching = new REstateBranching(stateNumber);
+        stateNumber++;
+        REstateBranching secondBranching = new REstateBranching(stateNumber);
+        stateNumber++;
+
+        //get the start and finish from the fsmToAdd
+        REstate plusStart = fsmToAdd.getStartState();
+        REstate plusFinish = fsmToAdd.getFinishState();
+
+        plusStart.setBothNextStates(firstBranching.getStateNumber());
+
+        firstBranching.setNextStateOne(secondBranching.getStateNumber());
+        firstBranching.setNextStatetwo(plusStart.getStateNumber()+1);
+
+        plusFinish.setBothNextStates(secondBranching.getStateNumber());
+
+        this.appendFiniteStateMachine(fsmToAdd);
+        states.add(firstBranching);
+        states.add(secondBranching);
+        finishState = secondBranching;
+        return stateNumber;
+    }
+
+
 
 
     public void addFinishState(int stateNumber)
@@ -77,7 +139,7 @@ public class REfiniteStateMachine {
 
     public void appendFiniteStateMachine(REfiniteStateMachine fsmToAdd)
     {
-        finishState.setBothNextStates(fsmToAdd.finishState.getStateNumber());
+        finishState.setBothNextStates(fsmToAdd.getStartState().getStateNumber());
         finishState = fsmToAdd.getFinishState();
         ArrayList<REstate> statesToAdd = fsmToAdd.getStates();
         states.addAll(statesToAdd);

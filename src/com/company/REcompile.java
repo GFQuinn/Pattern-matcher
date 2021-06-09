@@ -20,7 +20,12 @@ public class REcompile {
             currentIndex++;
             return startingFSM;
 
-        } else {
+        }
+        else if(pattern.charAt(currentIndex) == ')')
+        {
+            return startingFSM;
+        }
+        else {
 
             //if we are at the end of the pattern create fsm and return
             if (pattern.length() == currentIndex) {
@@ -28,6 +33,7 @@ public class REcompile {
                 startingFSM.addFinishState(currentStateNumber);
                 return startingFSM;
             }
+
             //ET
             //startingFSM.appendFiniteStateMachine(term(startingFSM));
             startingFSM = term(startingFSM);
@@ -65,7 +71,20 @@ public class REcompile {
             currentStateNumber = startingFSM.closure(factorsFSM, currentStateNumber);
             currentIndex++;
             return startingFSM;
-        } else {
+        }
+        else if(pattern.charAt(currentIndex) == '+')
+        {
+            currentStateNumber = startingFSM.plus(factorsFSM, currentStateNumber);
+            currentIndex++;
+            return startingFSM;
+        }
+        else if(pattern.charAt(currentIndex) == '?')
+        {
+            currentStateNumber = startingFSM.questionMark(factorsFSM, currentStateNumber);
+            currentIndex++;
+            return startingFSM;
+        }
+        else {
             startingFSM.appendFiniteStateMachine(factorsFSM);
             return startingFSM;
         }
@@ -89,8 +108,10 @@ public class REcompile {
 
             REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, literalList);
             currentStateNumber++;
+            currentIndex++;
             return newState;
-        } else if (pattern.charAt(currentIndex) == (char) 92) {
+        } else if (pattern.charAt(currentIndex) == '\\' ){
+
             currentIndex++;
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
@@ -114,8 +135,20 @@ public class REcompile {
             REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, currentChar);
             currentStateNumber++;
             return newState;
+        }
+        else if (pattern.charAt(currentIndex) == '(')
+        {
+            currentIndex++;
+            REfiniteStateMachine startingFSM = new REfiniteStateMachine(currentStateNumber);
+            currentStateNumber++;
+            REfiniteStateMachine bracketExpression = expression(startingFSM);
+            if(pattern.charAt(currentIndex) == ')') {
+                currentIndex++;
+            }
+            return startingFSM;
+        }
+        else {
 
-        } else {
             //current char must be invalid throw error
             throw new Exception("Invalid expression, invalid char at " + currentIndex);
         }

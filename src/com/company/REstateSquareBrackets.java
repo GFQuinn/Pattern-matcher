@@ -10,6 +10,6 @@ public class REstateSquareBrackets extends REstate{
 
     @Override
     public void dump() {
-
+        System.out.println(stateNumber + "   " +choices + "   " + nextStateOne + "    " + nextStatetwo);
     }
 }
