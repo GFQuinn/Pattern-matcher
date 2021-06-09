@@ -1,46 +1,43 @@
-package com.company;
-import java.util.*;
-
 import java.util.ArrayList;
 
-public class REfiniteStateMachine {
+public class REcompilerFiniteStateMachine {
     private REstate startState;
     private REstate finishState;
     private ArrayList<REstate> states;
 
-    REfiniteStateMachine()
+    REcompilerFiniteStateMachine()
     {
         states = new ArrayList<REstate>();
     }
 
 
-    REfiniteStateMachine(int stateNumber)
+    REcompilerFiniteStateMachine(int stateNumber)
     {
-        REstateBranching staringtState = new REstateBranching(stateNumber);
+        REstateBranching staringState = new REstateBranching(stateNumber);
         states = new ArrayList<>();
-        states.add(staringtState);
-        startState = staringtState;
-        finishState = staringtState;
+        states.add(staringState);
+        startState = staringState;
+        finishState = staringState;
     }
 
-    REfiniteStateMachine(int stateNumber, String choices)
+    REcompilerFiniteStateMachine(int stateNumber, String choices)
     {
-        REstateSquareBrackets staringtState = new REstateSquareBrackets(stateNumber, choices);
+        REstateSquareBrackets staringState = new REstateSquareBrackets(stateNumber, choices);
         states = new ArrayList<>();
-        states.add(staringtState);
-        startState = staringtState;
-        finishState = staringtState;
+        states.add(staringState);
+        startState = staringState;
+        finishState = staringState;
     }
-    REfiniteStateMachine(int stateNumber, Character character)
+    REcompilerFiniteStateMachine(int stateNumber, Character character)
     {
-        REstateMatching staringtState = new REstateMatching(stateNumber, character);
+        REstateMatching staringState = new REstateMatching(stateNumber, character);
         states = new ArrayList<>();
-        states.add(staringtState);
-        startState = staringtState;
-        finishState = staringtState;
+        states.add(staringState);
+        startState = staringState;
+        finishState = staringState;
     }
 
-    public int closure(REfiniteStateMachine fsmToAdd, int stateNumber)
+    public int closure(REcompilerFiniteStateMachine fsmToAdd, int stateNumber)
     {
         //create the new Branching states
         REstateBranching firstBranching = new REstateBranching(stateNumber);
@@ -48,7 +45,7 @@ public class REfiniteStateMachine {
         REstateBranching secondBranching = new REstateBranching(stateNumber);
         stateNumber++;
 
-        //point first branching to startstate of fsmToAdd and second Branching
+        //point first branching to start state of fsmToAdd and second Branching
         firstBranching.setNextStateOne(secondBranching.getStateNumber());
         firstBranching.setNextStatetwo(secondBranching.getStateNumber());
 
@@ -70,7 +67,7 @@ public class REfiniteStateMachine {
         return stateNumber;
     }
 
-    public int plus(REfiniteStateMachine fsmToAdd, int stateNumber){
+    public int plus(REcompilerFiniteStateMachine fsmToAdd, int stateNumber){
         //add new state to be the finishing state
         REstateBranching branching = new REstateBranching(stateNumber);
         stateNumber++;
@@ -94,7 +91,7 @@ public class REfiniteStateMachine {
         return stateNumber;
     }
 
-    public int questionMark(REfiniteStateMachine fsmToAdd, int stateNumber)
+    public int questionMark(REcompilerFiniteStateMachine fsmToAdd, int stateNumber)
     {
         //create the new Branching states
         REstateBranching firstBranching = new REstateBranching(stateNumber);
@@ -120,11 +117,11 @@ public class REfiniteStateMachine {
         return stateNumber;
     }
 
-    public int alternation(REfiniteStateMachine fsmToAddOne, REfiniteStateMachine fsmToAddTwo, int stateNumber){
+    public int alternation(REcompilerFiniteStateMachine fsmToAddOne, REcompilerFiniteStateMachine fsmToAddTwo, int stateNumber){
 
+        //get start and finish of the alternating fsm's
         REstate fsmOneStart = fsmToAddOne.getStartState();
         REstate fsmOneFinish = fsmToAddOne.getFinishState();
-
         REstate fsmTwoStart = fsmToAddTwo.getStartState();
         REstate fsmTwoFinish = fsmToAddTwo.getFinishState();
 
@@ -134,18 +131,23 @@ public class REfiniteStateMachine {
         REstateBranching secondBranching = new REstateBranching(stateNumber);
         stateNumber++;
 
+        //point both fsm's to second branch as its the new finishing state
         fsmOneFinish.setBothNextStates(secondBranching.getStateNumber());
         fsmTwoFinish.setBothNextStates(secondBranching.getStateNumber());
 
+        //point the first branching at each of the fsm's
         firstBranching.setNextStateOne(fsmOneStart.getStateNumber());
         firstBranching.setNextStatetwo(fsmTwoStart.getStateNumber());
 
+        //point the current fsm to at the first branching state
         finishState.setBothNextStates(firstBranching.getStateNumber());
 
+        //add all the new states to this fsm
         states.add(firstBranching);
         states.addAll(fsmToAddOne.states);
         states.addAll(fsmToAddTwo.states);
         states.add(secondBranching);
+        //reset the finish state to be the second branching state
         finishState = secondBranching;
         return stateNumber;
     }
@@ -164,7 +166,7 @@ public class REfiniteStateMachine {
         finishState = stateToAdd;
     }
 
-    public void appendFiniteStateMachine(REfiniteStateMachine fsmToAdd)
+    public void appendFiniteStateMachine(REcompilerFiniteStateMachine fsmToAdd)
     {
         finishState.setBothNextStates(fsmToAdd.getStartState().getStateNumber());
         finishState = fsmToAdd.getFinishState();

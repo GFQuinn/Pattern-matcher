@@ -1,5 +1,3 @@
-package com.company;
-
 public class REstateFinish extends REstate{
 
     Byte finishingSymbol = -1;
@@ -7,6 +5,10 @@ public class REstateFinish extends REstate{
     REstateFinish(int stateNumber) {
         super(stateNumber);
 
+    }
+    REstateFinish(int stateNumber, int nextStateOne, int nextStatetwo)
+    {
+        super(stateNumber, nextStateOne, nextStatetwo);
     }
 
     public void dump()

@@ -1,11 +1,9 @@
-package com.company;
-
 public abstract class REstate {
     protected int stateNumber;
     protected int nextStateOne;
     protected int nextStatetwo;
 
-    REstate(int stateNumber, REstate nextStateOne, REstate nextStatetwo)
+    REstate(int stateNumber, int nextStateOne, int nextStatetwo)
     {
         this.stateNumber = stateNumber;
 

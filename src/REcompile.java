@@ -1,5 +1,3 @@
-package com.company;
-
 public class REcompile {
 
     private static String pattern;
@@ -9,23 +7,23 @@ public class REcompile {
 
     public static void main(String[] args) throws Exception {
         pattern = args[0];
-        REfiniteStateMachine startingFSM = new REfiniteStateMachine(currentStateNumber);
+        REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
         currentStateNumber++;
-        REfiniteStateMachine finishedFSM = expression(startingFSM);
+        REcompilerFiniteStateMachine finishedFSM = expression(startingFSM);
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
         finishedFSM.dump();
     }
 
-    private static REfiniteStateMachine expression(REfiniteStateMachine startingFSM) throws Exception {
+    private static REcompilerFiniteStateMachine expression(REcompilerFiniteStateMachine startingFSM) throws Exception {
         if (pattern.charAt(currentIndex) == '|' && currentIndex != 0) {
             currentIndex++;
 
-            REfiniteStateMachine newFSM = new REfiniteStateMachine(currentStateNumber);
+            REcompilerFiniteStateMachine newFSM = new REcompilerFiniteStateMachine(currentStateNumber);
             currentStateNumber++;
 
             newFSM =  expression(newFSM);
-            REfiniteStateMachine alternationFSM = new REfiniteStateMachine(currentStateNumber);
+            REcompilerFiniteStateMachine alternationFSM = new REcompilerFiniteStateMachine(currentStateNumber);
             currentStateNumber++;
 
             currentStateNumber = alternationFSM.alternation(newFSM,startingFSM, currentStateNumber);
@@ -53,25 +51,16 @@ public class REcompile {
 
                 return startingFSM;
             } else {
-                REfiniteStateMachine TE = expression(startingFSM);
+                REcompilerFiniteStateMachine TE = expression(startingFSM);
                 return TE;
             }
-
-            /*if (pattern.charAt(currentIndex) == '(' || isliteral() || pattern.charAt(currentIndex) == '.' | pattern.charAt(currentIndex) == '[' | pattern.charAt(currentIndex) == '|' | pattern.charAt(currentIndex) == (char) 92) {
-
-                if (pattern.length() == currentIndex) {
-
-                    return startingFSM;
-                }
-
-            */
         }
 
     }
 
 
-    private static REfiniteStateMachine term(REfiniteStateMachine startingFSM) throws Exception {
-        REfiniteStateMachine factorsFSM = factor();
+    private static REcompilerFiniteStateMachine term(REcompilerFiniteStateMachine startingFSM) throws Exception {
+        REcompilerFiniteStateMachine factorsFSM = factor();
 
         if (pattern.length() == currentIndex) {
             //if factor returns and we are at the end append the factorsFSM and return
@@ -102,7 +91,7 @@ public class REcompile {
 
     }
 
-    private static REfiniteStateMachine factor() throws Exception {
+    private static REcompilerFiniteStateMachine factor() throws Exception {
         if (pattern.length() == currentIndex) {
             throw new Exception("Invalid expression");
         } else if (pattern.charAt(currentIndex) == '[') {
@@ -117,7 +106,7 @@ public class REcompile {
             }
             while (pattern.charAt(currentIndex) != ']');
 
-            REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, literalList);
+            REcompilerFiniteStateMachine newState = new REcompilerFiniteStateMachine(currentStateNumber, literalList);
             currentStateNumber++;
             currentIndex++;
             return newState;
@@ -127,7 +116,7 @@ public class REcompile {
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
 
-            REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, currentChar);
+            REcompilerFiniteStateMachine newState = new REcompilerFiniteStateMachine(currentStateNumber, currentChar);
             currentStateNumber++;
             return newState;
 
@@ -135,7 +124,7 @@ public class REcompile {
 
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
-            REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, currentChar);
+            REcompilerFiniteStateMachine newState = new REcompilerFiniteStateMachine(currentStateNumber, currentChar);
             currentStateNumber++;
             return newState;
 
@@ -143,16 +132,16 @@ public class REcompile {
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
 
-            REfiniteStateMachine newState = new REfiniteStateMachine(currentStateNumber, currentChar);
+            REcompilerFiniteStateMachine newState = new REcompilerFiniteStateMachine(currentStateNumber, currentChar);
             currentStateNumber++;
             return newState;
         }
         else if (pattern.charAt(currentIndex) == '(')
         {
             currentIndex++;
-            REfiniteStateMachine startingFSM = new REfiniteStateMachine(currentStateNumber);
+            REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
             currentStateNumber++;
-            REfiniteStateMachine bracketExpression = expression(startingFSM);
+            REcompilerFiniteStateMachine bracketExpression = expression(startingFSM);
             if(pattern.charAt(currentIndex) == ')') {
                 currentIndex++;
             }
