@@ -1,8 +1,15 @@
 REfiniteStateMachine questionMark:
  1. firstBranching.setNextStatetwo(plusStart.getStateNumber()+1);
+
+ a?b?c?d? <-- Not branching correctly
+
+
  if a finite state machine starts with a state that branches this will not work.
 
 Close Bracket ).
     1. not sure if these are being handled properly
+
+
+
 
 
