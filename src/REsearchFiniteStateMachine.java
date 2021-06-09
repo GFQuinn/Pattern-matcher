@@ -10,7 +10,6 @@ public class REsearchFiniteStateMachine {
 
     public void addState(String[] attributes)
     {
-        System.out.println(attributes[0]+attributes[1]+attributes[2]);
         //if the length is 3 it has to be a branching state
         if(attributes.length == 3)
         {

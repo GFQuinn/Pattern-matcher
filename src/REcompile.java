@@ -7,16 +7,26 @@ public class REcompile {
 
     public static void main(String[] args) throws Exception {
         pattern = args[0];
+        //create a new fsm to start from
         REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
         currentStateNumber++;
+        //call expression to parse the inputted pattern
         REcompilerFiniteStateMachine finishedFSM = expression(startingFSM);
+        //add a finishing state
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
         //finishedFSM.dump();
+        //print fsm to stream for REsearch
         finishedFSM.printToStream();
 
     }
-
+    /*
+    expression takes a FSM and follows these rules
+     E -> |E if it sees alternation it moves ahead calls expression creates a new FSM and then joins the FSM it was
+     parsed, the FSM it got from expression and the FSM it created.
+     E->( if E sees a ( it returns
+     E->T
+     */
     private static REcompilerFiniteStateMachine expression(REcompilerFiniteStateMachine startingFSM) throws Exception {
         if (pattern.charAt(currentIndex) == '|' && currentIndex != 0) {
             currentIndex++;
@@ -60,7 +70,10 @@ public class REcompile {
 
     }
 
-
+    /*
+    term receives a FSM from expression and calls factor and then looks at the next character and
+    joins together the two FSMs depending on the operator or char it sees. Then it returns it.
+     */
     private static REcompilerFiniteStateMachine term(REcompilerFiniteStateMachine startingFSM) throws Exception {
         REcompilerFiniteStateMachine factorsFSM = factor();
 
@@ -92,11 +105,12 @@ public class REcompile {
         }
 
     }
-
+    //factor looks at the current index and builds a FSM based on that character and returns it
     private static REcompilerFiniteStateMachine factor() throws Exception {
         if (pattern.length() == currentIndex) {
             throw new Exception("Invalid expression");
-        } else if (pattern.charAt(currentIndex) == '[') {
+        }
+        else if (pattern.charAt(currentIndex) == '[') {
             currentIndex++;
             String literalList = "";
             do {
@@ -112,7 +126,8 @@ public class REcompile {
             currentStateNumber++;
             currentIndex++;
             return newState;
-        } else if (pattern.charAt(currentIndex) == '\\' ){
+        }
+        else if (pattern.charAt(currentIndex) == '\\' ){
 
             currentIndex++;
             Character currentChar = pattern.charAt(currentIndex);
@@ -122,7 +137,8 @@ public class REcompile {
             currentStateNumber++;
             return newState;
 
-        } else if (isliteral()) {
+        }
+        else if (isliteral()) {
 
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
@@ -130,7 +146,8 @@ public class REcompile {
             currentStateNumber++;
             return newState;
 
-        } else if (pattern.charAt(currentIndex) == '.') {
+        }
+        else if (pattern.charAt(currentIndex) == '.') {
             Character currentChar = pattern.charAt(currentIndex);
             currentIndex++;
 
@@ -149,7 +166,8 @@ public class REcompile {
             }
             return startingFSM;
         }
-        else {
+        else
+        {
 
             //current char must be invalid throw error
             throw new Exception("Invalid expression, invalid char at " + currentIndex);

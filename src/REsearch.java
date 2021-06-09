@@ -8,7 +8,12 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
+
         fsm.dump();
+
+
+
+
 
     }
 
