@@ -29,8 +29,9 @@ public class REsearchFiniteStateMachine {
             return branchingState;
         }
         //only finishing state has next state as -1
-        else if( (attributes[1]).charAt(0) == -1)
+        else if(  attributes[1].equals("-1") )
         {
+
             int stateNumber = Integer.valueOf(attributes[0]);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
@@ -41,15 +42,16 @@ public class REsearchFiniteStateMachine {
         //if the matching string is not a char it must be a square bracket state
         else if (attributes[1].length() > 1)
         {
-            String options = attributes[0];
-            int stateNumber = Integer.valueOf(attributes[1]);
+
+            int stateNumber = Integer.valueOf(attributes[0]);
+            String options = attributes[1].substring(1,attributes.length);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
 
             REstateSquareBrackets squareBracketState = new REstateSquareBrackets(stateNumber, options, nextStateOne, nextStateTwo);
             return squareBracketState;
         }
-        //else its a matching state. Square bracket states with length 1 are treated as matching states.
+        //else its a matching state.
         else
         {
             int stateNumber = Integer.valueOf(attributes[0]);

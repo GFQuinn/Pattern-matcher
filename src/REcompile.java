@@ -15,9 +15,9 @@ public class REcompile {
         //add a finishing state
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
-        finishedFSM.dump();
+        //finishedFSM.dump();
         //print fsm to stream for REsearch
-        //finishedFSM.printToStream();
+        finishedFSM.printToStream();
 
     }
     /*
@@ -169,14 +169,11 @@ public class REcompile {
             //current char must be invalid throw error
             throw new Exception("Invalid expression, invalid char at " + currentIndex);
         }
-
     }
-
-
     private static boolean isliteral() {
-        String nonliterallist = "\\|*?+.()[]";
+        String nonLiteralList = "\\|*?+.()[]";
         char currentChar = pattern.charAt(currentIndex);
-        if (nonliterallist.indexOf(currentChar) == -1) {
+        if (nonLiteralList.indexOf(currentChar) == -1) {
             return true;
         }
         return false;

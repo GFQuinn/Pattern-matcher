@@ -17,8 +17,8 @@ public class REstateSquareBrackets extends REstate{
     }
     @Override
     public String getAttributes() {
-        String attributesOne = choices;
-        String attributesTwo = String.valueOf(stateNumber);
+        String attributesOne = String.valueOf(stateNumber);
+        String attributesTwo = "[" + choices + "]";
         String attributesThree = String.valueOf(nextStateOne);
         String attributesFour = String.valueOf(nextStatetwo);
 

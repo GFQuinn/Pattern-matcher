@@ -1,5 +1,4 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class REsearch {
@@ -8,8 +7,34 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
-        //fsm.dump();
+        fsm.dump();
+        String filename = args[0];
+        ArrayList<String> fileLines = readFile(filename);
+
     }
+
+    private static ArrayList<String> readFile(String filename)
+    {
+     ArrayList<String> fileLines = new ArrayList<>();
+        String line = "";
+        try {
+            BufferedReader inputReader = new BufferedReader(new FileReader(filename));
+            while((line = inputReader.readLine()) != "")
+            {
+                fileLines.add(line);
+                System.out.println();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fileLines;
+    }
+
+
 
     private static ArrayList<String[]> readInputFSM() {
         String currentLine;
