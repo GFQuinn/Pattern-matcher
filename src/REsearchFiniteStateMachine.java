@@ -14,11 +14,11 @@ public class REsearchFiniteStateMachine {
         {
             int stateNumber = Integer.valueOf(attributes[0]);
             fsm[stateNumber] = addState(attributes);
+
         }
     }
-    public REstate getState(int stateNumber)
-    {
-        return fsm[stateNumber];
+    public REstate getState(int stateNumber){
+    return fsm[stateNumber];
     }
 
     public REstate getStart()
@@ -41,13 +41,11 @@ public class REsearchFiniteStateMachine {
         //only finishing state has next state as -1
         else if(  attributes[1].equals("-1") )
         {
-
             int stateNumber = Integer.valueOf(attributes[0]);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
 
-            REstateFinish finshingState = new REstateFinish(stateNumber, nextStateOne, nextStateTwo);
-            return finshingState;
+            return new REstateFinish(stateNumber, nextStateOne, nextStateTwo);
         }
         //if the matching string is not a char it must be a square bracket state
         else if (attributes[1].length() > 1)
@@ -72,6 +70,11 @@ public class REsearchFiniteStateMachine {
             return matchingState;
         }
     }
+    public int size()
+    {
+        return fsm.length;
+    }
+
     public void dump()
     {
         for (REstate state: fsm) {

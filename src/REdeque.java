@@ -10,14 +10,23 @@ public class REdeque {
         Node newNode =  new Node(e);
         last = newNode;
         first = newNode;
-        size++;
+        size = 1;
     }
     public REstate pop()
     {
         if(size != 0)
         {
             REstate returnState = first.state;
-            first = first.nextNode;
+            size--;
+            if(size == 0)
+            {
+               first = null;
+               last = null;
+            }
+            else
+            {
+                first = first.nextNode;
+            }
             return returnState;
         }
         else
@@ -28,17 +37,33 @@ public class REdeque {
 
     public void addLast(REstate e)
     {
-        Node newEndNode =  new Node(e);
-        last.nextNode = newEndNode;
-        last = newEndNode;
-        size--;
+            Node newEndNode =  new Node(e);
+            if (size == 0)
+            {
+                first = newEndNode;
+                last = newEndNode;
+            }
+            else {
+                last.nextNode = newEndNode;
+                last = newEndNode;
+            }
+            size++;
     }
     public void addFirst(REstate e)
     {
-        Node newStartNode =  new Node(e);
-        newStartNode.nextNode = first;
-        first = newStartNode;
-        size++;
+
+            Node newStartNode =  new Node(e);
+            if (size == 0)
+            {
+                first = newStartNode;
+                last = newStartNode;
+            }
+            else
+            {
+                newStartNode.nextNode = first;
+                first = newStartNode;
+            }
+            size++;
     }
 
     public int getSize() {

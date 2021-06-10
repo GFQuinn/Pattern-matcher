@@ -25,5 +25,10 @@ public class REstateFinish extends REstate {
         String attributes = attributesOne + null + attributesTwo + null + attributesThree + null + attributesFour;
         return attributes;
     }
+    @Override
+    public String toString()
+    {
+        return "Finish";
+    }
 
 }

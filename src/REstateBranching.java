@@ -23,4 +23,9 @@ public class REstateBranching extends REstate{
         String attributes = attributesOne + null + attributesTwo + null + attributesThree;
         return attributes;
     }
+    @Override
+    public String toString()
+    {
+        return "Branching";
+    }
 }

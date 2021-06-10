@@ -35,6 +35,4 @@ public abstract class REstate {
     public abstract void dump();
 
     public abstract String getAttributes();
-
-
 }

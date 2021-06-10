@@ -107,11 +107,13 @@ public class REcompilerFiniteStateMachine {
         plusStart.setBothNextStates(firstBranching.getStateNumber());
 
         firstBranching.setNextStateOne(secondBranching.getStateNumber());
-        firstBranching.setNextStatetwo(plusStart.getStateNumber()+1);
+        firstBranching.setNextStatetwo(plusStart.getStateNumber());
 
+        finishState.setBothNextStates(firstBranching.getStateNumber());
+        System.out.println(firstBranching.getStateNumber());
         plusFinish.setBothNextStates(secondBranching.getStateNumber());
 
-        this.appendFiniteStateMachine(fsmToAdd);
+        states.addAll(fsmToAdd.states);
         states.add(firstBranching);
         states.add(secondBranching);
         finishState = secondBranching;

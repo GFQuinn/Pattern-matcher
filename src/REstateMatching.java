@@ -37,4 +37,9 @@ public class REstateMatching extends REstate{
         String attributes = attributesOne + null + attributesTwo + null + attributesThree + null + attributesFour;
         return attributes;
     }
+    @Override
+    public String toString()
+    {
+        return "Matching";
+    }
 }

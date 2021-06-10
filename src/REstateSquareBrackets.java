@@ -37,5 +37,9 @@ public class REstateSquareBrackets extends REstate{
         String attributes = attributesOne + null + attributesTwo + null + attributesThree + null + attributesFour;
         return attributes;
     }
+    public String toString()
+    {
+        return "SquareBrackets";
+    }
 
 }

@@ -17,12 +17,12 @@ public class REsearch {
                 //if we find a match in the line add it to the lineMatchList and stop looping for this line
                 if (runSearch(i, line.length(), line, fsm)){
                     lineMatchList.add(lineCounter);
-                    System.out.println(lineCounter);
                     break;
                 }
             }
             lineCounter++;
         }
+
     }
 
     private static boolean runSearch(int startIndex, int lineLength, String currentLine, REsearchFiniteStateMachine fsm)
@@ -33,14 +33,18 @@ public class REsearch {
         REstateScan scanState = new REstateScan();
         deque.addLast(scanState);
         REstate currentState;
+
         while(deque.getSize() != 0 && startIndex + point < lineLength)
         {
+
             currentState = deque.pop();
+
+
             if(!(currentState instanceof REstateScan))
             {
+
                 if(currentState instanceof REstateFinish)
                 {
-
                     return true;
                 }
                 else if(currentState instanceof REstateBranching)
@@ -88,6 +92,7 @@ public class REsearch {
                 //we must now be looking at a REstateMatching
                 else
                 {
+
                     Character currentCharacter = currentLine.charAt(point);
                     //if the currentCharacter is a match with the matching state char add its next states to deque
                     if(((REstateMatching)currentState).isMatching(currentCharacter))
@@ -96,6 +101,7 @@ public class REsearch {
                         int nextStateTwoNumber = currentState.nextStatetwo;
                         if(nextStateOneNumber == nextStateTwoNumber)
                         {
+
                             REstate nextState = fsm.getState(nextStateOneNumber);
                             deque.addLast(nextState);
                             point++;
@@ -110,6 +116,15 @@ public class REsearch {
                         }
                     }
                 }
+            }
+            //else its a scan state
+            else
+            {
+                if(deque.getSize()!= 0)
+                {
+                    deque.addLast(scanState);
+                }
+
             }
 
         }
@@ -144,6 +159,7 @@ public class REsearch {
     private static ArrayList<String[]> readInputFSM() {
         String currentLine;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         ArrayList<String[]> fsmString = new ArrayList<String[]>();
         Character spliter = null;
         try {

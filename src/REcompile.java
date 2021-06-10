@@ -8,6 +8,10 @@ public class REcompile {
     public static void main(String[] args) throws Exception {
         pattern = args[0];
         //create a new fsm to start from
+        if(isOperator(pattern.charAt(0)))
+        {
+            throw new Exception("Invalid expression, expression can not start with an operator");
+        }
         REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
         currentStateNumber++;
         //call expression to parse the inputted pattern
@@ -175,6 +179,23 @@ public class REcompile {
             throw new Exception("Invalid expression, invalid char at " + currentIndex);
         }
     }
+
+    private static boolean isOperator(Character character)
+    {
+        String operatorList = "+*?|";
+        if(operatorList.indexOf(character) == -1)
+        {
+            System.out.println(operatorList.indexOf(character) );
+            return false;
+        }
+        else
+        {
+            System.out.println(operatorList.indexOf(character) );
+            return true;
+        }
+
+    }
+
     private static boolean isliteral() {
         String nonLiteralList = "\\|*?+.()[]";
         char currentChar = pattern.charAt(currentIndex);

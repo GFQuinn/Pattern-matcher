@@ -14,4 +14,10 @@ public class REstateScan extends REstate{
     public String getAttributes() {
         return null;
     }
+    @Override
+    public String toString()
+    {
+        return "Scan";
+
+    }
 }
