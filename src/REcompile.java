@@ -155,6 +155,11 @@ public class REcompile {
         }
         else if (pattern.charAt(currentIndex) == '(')
         {
+
+            if(pattern.charAt(currentIndex+1) == '|') {
+                throw new Exception("Invalid expression can't have Alteration after opening bracket.");
+            }
+
             currentIndex++;
             REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
             currentStateNumber++;
