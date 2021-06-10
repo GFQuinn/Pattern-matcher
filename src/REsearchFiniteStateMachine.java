@@ -16,6 +16,16 @@ public class REsearchFiniteStateMachine {
             fsm[stateNumber] = addState(attributes);
         }
     }
+    public REstate getState(int stateNumber)
+    {
+        return fsm[stateNumber];
+    }
+
+    public REstate getStart()
+    {
+        return fsm[startingState];
+    }
+
     public REstate addState(String[] attributes)
     {
         //if the length is 3 it has to be a branching state

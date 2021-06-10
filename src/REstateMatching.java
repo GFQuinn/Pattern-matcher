@@ -10,6 +10,18 @@ public class REstateMatching extends REstate{
         super(stateNumber, nextStateOne, nextStateTwo);
         this.character = character;
     }
+    public boolean isMatching(Character inputCharacter)
+    {
+        if (character.equals(inputCharacter))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     @Override
     public void dump()
     {

@@ -10,6 +10,18 @@ public class REstateSquareBrackets extends REstate{
         super(stateNumber, nextStateOne, nextStateTwo);
         this.choices = choices;
     }
+    public boolean checkContains(char character){
+
+        if(choices.indexOf(character) == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
 
     @Override
     public void dump() {

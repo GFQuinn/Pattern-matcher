@@ -5,9 +5,12 @@ public class REdeque {
     private int size;
 
 
-    public REdeque()
+    public REdeque(REstate e)
     {
-
+        Node newNode =  new Node(e);
+        last = newNode;
+        first = newNode;
+        size++;
     }
     public REstate pop()
     {
