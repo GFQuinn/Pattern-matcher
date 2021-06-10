@@ -7,6 +7,7 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
+        //dump for testing purposes
         fsm.dump();
         String filename = args[0];
         ArrayList<String> fileLines = readFile(filename);
@@ -16,7 +17,8 @@ public class REsearch {
             for (int i = 0; i < line.length(); i++) {
                 //if we find a match in the line add it to the lineMatchList and stop looping for this line
                 if (runSearch(i, line.length(), line, fsm)){
-                    lineMatchList.add(lineCounter);
+                    System.out.println(lineCounter);
+                    //lineMatchList.add(lineCounter);
                     break;
                 }
             }
@@ -34,12 +36,10 @@ public class REsearch {
         deque.addLast(scanState);
         REstate currentState;
 
-        while(deque.getSize() != 0 && startIndex + point < lineLength)
+        while(deque.getSize() != 0)
         {
 
             currentState = deque.pop();
-
-
             if(!(currentState instanceof REstateScan))
             {
 
@@ -66,7 +66,11 @@ public class REsearch {
                 }
                 else if(currentState instanceof REstateSquareBrackets)
                 {
-                    Character currentCharacter = currentLine.charAt(point);
+                    if(startIndex + point == lineLength)
+                    {
+                        break;
+                    }
+                    Character currentCharacter = currentLine.charAt(point+startIndex);
                     //if the REstateSquareBrackets contains the character then we can add next states
                     if(((REstateSquareBrackets) currentState).checkContains(currentCharacter))
                     {
@@ -92,8 +96,11 @@ public class REsearch {
                 //we must now be looking at a REstateMatching
                 else
                 {
-
-                    Character currentCharacter = currentLine.charAt(point);
+                    if(startIndex + point == lineLength)
+                    {
+                        break;
+                    }
+                    Character currentCharacter = currentLine.charAt(point+startIndex);
                     //if the currentCharacter is a match with the matching state char add its next states to deque
                     if(((REstateMatching)currentState).isMatching(currentCharacter))
                     {

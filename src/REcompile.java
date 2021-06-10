@@ -185,12 +185,10 @@ public class REcompile {
         String operatorList = "+*?|";
         if(operatorList.indexOf(character) == -1)
         {
-            System.out.println(operatorList.indexOf(character) );
             return false;
         }
         else
         {
-            System.out.println(operatorList.indexOf(character) );
             return true;
         }
 
