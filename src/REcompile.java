@@ -19,9 +19,9 @@ public class REcompile {
         //add a finishing state
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
-        finishedFSM.dump();
+        //finishedFSM.dump();
         //print fsm to stream for REsearch
-        //finishedFSM.printToStream();
+        finishedFSM.printToStream();
 
     }
     /*

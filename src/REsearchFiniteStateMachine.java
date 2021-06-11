@@ -52,7 +52,7 @@ public class REsearchFiniteStateMachine {
         {
 
             int stateNumber = Integer.valueOf(attributes[0]);
-            String options = attributes[1].substring(1,attributes.length);
+            String options = attributes[1].substring(1,attributes[1].length()-1);
             int nextStateOne = Integer.valueOf(attributes[2]);
             int nextStateTwo = Integer.valueOf(attributes[3]);
 
