@@ -19,9 +19,9 @@ public class REcompile {
         //add a finishing state
         finishedFSM.addFinishState(currentStateNumber);
         currentStateNumber++;
-        //finishedFSM.dump();
+        finishedFSM.dump();
         //print fsm to stream for REsearch
-        finishedFSM.printToStream();
+        //finishedFSM.printToStream();
 
     }
     /*
@@ -59,12 +59,14 @@ public class REcompile {
                 return startingFSM;
             }
 
-            //ET
+            //E->T
             //startingFSM.appendFiniteStateMachine(term(startingFSM));
             startingFSM = term(startingFSM);
             if (pattern.length() == currentIndex) {
                 return startingFSM;
-            } else {
+            }
+            //E->TE
+            else {
                 REcompilerFiniteStateMachine TE = expression(startingFSM);
                 return TE;
             }
