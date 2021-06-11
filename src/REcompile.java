@@ -167,6 +167,10 @@ public class REcompile {
             }
 
             currentIndex++;
+            if(pattern.charAt(currentIndex) == ')')
+            {
+                throw new Exception("Invalid expression brackets must contain an expression.");
+            }
             REcompilerFiniteStateMachine startingFSM = new REcompilerFiniteStateMachine(currentStateNumber);
             currentStateNumber++;
             REcompilerFiniteStateMachine bracketExpression = expression(startingFSM);

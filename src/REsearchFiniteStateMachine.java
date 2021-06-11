@@ -59,6 +59,15 @@ public class REsearchFiniteStateMachine {
             REstateSquareBrackets squareBracketState = new REstateSquareBrackets(stateNumber, options, nextStateOne, nextStateTwo);
             return squareBracketState;
         }
+        else if(attributes[1].charAt(0) == '.')
+        {
+            int stateNumber = Integer.valueOf(attributes[0]);
+            Character character = attributes[1].charAt(0);
+            int nextStateOne = Integer.valueOf(attributes[2]);
+            int nextStateTwo = Integer.valueOf(attributes[3]);
+            REstatePeroid peroidState = new REstatePeroid(stateNumber, nextStateOne, nextStateTwo);
+            return peroidState;
+        }
         //else its a matching state.
         else
         {

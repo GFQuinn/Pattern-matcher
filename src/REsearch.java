@@ -7,7 +7,7 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
-
+        fsm.dump();
         String filename = args[0];
         ArrayList<String> fileLines = readFile(filename);
         int lineCounter = 0;
@@ -35,6 +35,8 @@ public class REsearch {
         deque.addLast(scanState);
         REstate currentState;
 
+        boolean gotToFinish =  false;
+
         while(deque.getSize() != 0)
         {
 
@@ -44,7 +46,8 @@ public class REsearch {
 
                 if(currentState instanceof REstateFinish)
                 {
-                    return true;
+                    gotToFinish = true;
+
                 }
                 else if(currentState instanceof REstateBranching)
                 {
@@ -54,13 +57,15 @@ public class REsearch {
                     if(nextStateOneNumber == nextStateTwoNumber)
                     {
                         REstate nextState = fsm.getState(nextStateOneNumber);
-                        deque.addLast(nextState);
+                        deque.addFirst(nextState);
+
                     }
                     else {
                         REstate nextStateOne = fsm.getState(nextStateOneNumber);
                         REstate nextStateTwo = fsm.getState(nextStateTwoNumber);
-                        deque.addLast(nextStateOne);
-                        deque.addLast(nextStateTwo);
+                        deque.addFirst(nextStateTwo);
+                        deque.addFirst(nextStateOne);
+
                     }
                 }
                 else if(currentState instanceof REstateSquareBrackets)
@@ -79,7 +84,7 @@ public class REsearch {
                         {
                             REstate nextState = fsm.getState(nextStateOneNumber);
                             deque.addLast(nextState);
-                            point++;
+
                         }
                         else
                         {
@@ -87,10 +92,31 @@ public class REsearch {
                             REstate nextStateTwo = fsm.getState(nextStateTwoNumber);
                             deque.addLast(nextStateOne);
                             deque.addLast(nextStateTwo);
-                            point++;
+
                         }
                     }
                     //else we don't have a match for this state so it just gets popped
+                }
+                else if (currentState instanceof REstatePeroid)
+                {
+                    if(startIndex + point == lineLength)
+                    {
+                        break;
+                    }
+                    int nextStateOneNumber = currentState.nextStateOne;
+                    int nextStateTwoNumber = currentState.nextStatetwo;
+                    if(nextStateOneNumber == nextStateTwoNumber)
+                    {
+                        REstate nextState = fsm.getState(nextStateOneNumber);
+                        deque.addLast(nextState);
+                    }
+                    else
+                    {
+                        REstate nextStateOne = fsm.getState(nextStateOneNumber);
+                        REstate nextStateTwo = fsm.getState(nextStateTwoNumber);
+                        deque.addLast(nextStateOne);
+                        deque.addLast(nextStateTwo);
+                    }
                 }
                 //we must now be looking at a REstateMatching
                 else
@@ -107,10 +133,8 @@ public class REsearch {
                         int nextStateTwoNumber = currentState.nextStatetwo;
                         if(nextStateOneNumber == nextStateTwoNumber)
                         {
-
                             REstate nextState = fsm.getState(nextStateOneNumber);
                             deque.addLast(nextState);
-                            point++;
                         }
                         else
                         {
@@ -118,7 +142,6 @@ public class REsearch {
                             REstate nextStateTwo = fsm.getState(nextStateTwoNumber);
                             deque.addLast(nextStateOne);
                             deque.addLast(nextStateTwo);
-                            point++;
                         }
                     }
                 }
@@ -129,13 +152,14 @@ public class REsearch {
                 if(deque.getSize()!= 0)
                 {
                     deque.addLast(scanState);
+                    point++;
                 }
 
             }
 
         }
 
-        return false;
+        return gotToFinish;
     }
 
 

@@ -1,10 +1,1 @@
-aaaabcc
-aaabc
-abcc
-a
-dc
-abcd
-[][][]
-a?aa
-a.?/*
-......
+aaab
