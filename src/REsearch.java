@@ -7,8 +7,7 @@ public class REsearch {
 
         ArrayList<String[]> fsmStrings = readInputFSM();
         REsearchFiniteStateMachine fsm = parseFiniteStateMachine(fsmStrings);
-        //dump for testing purposes
-        fsm.dump();
+
         String filename = args[0];
         ArrayList<String> fileLines = readFile(filename);
         int lineCounter = 0;
@@ -17,7 +16,7 @@ public class REsearch {
             for (int i = 0; i < line.length(); i++) {
                 //if we find a match in the line add it to the lineMatchList and stop looping for this line
                 if (runSearch(i, line.length(), line, fsm)){
-                    System.out.println(lineCounter);
+                    System.out.println(lineCounter + "   starting at char number =" + i);
                     //lineMatchList.add(lineCounter);
                     break;
                 }
@@ -160,8 +159,6 @@ public class REsearch {
 
         return fileLines;
     }
-
-
 
     private static ArrayList<String[]> readInputFSM() {
         String currentLine;
