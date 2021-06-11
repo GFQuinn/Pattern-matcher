@@ -68,6 +68,12 @@ public class REsearchFiniteStateMachine {
             REstatePeroid peroidState = new REstatePeroid(stateNumber, nextStateOne, nextStateTwo);
             return peroidState;
         }
+        else if(attributes[1].charAt(0) == '!')
+        {
+            int stateNumber = Integer.valueOf(attributes[0]);
+           REstateCanNotMatch canNotMatch = new REstateCanNotMatch(stateNumber);
+           return canNotMatch;
+        }
         //else its a matching state.
         else
         {

@@ -4,6 +4,7 @@ public class REstatePeroid extends REstate{
     {
         super(stateNumber, nextStateOne, nextStatetwo);
     }
+
     @Override
     public void dump() {
         System.out.println(stateNumber + "   " + "PR" + "   " + nextStateOne + "    " + nextStatetwo);

@@ -16,7 +16,8 @@ public class REsearch {
             for (int i = 0; i < line.length(); i++) {
                 //if we find a match in the line add it to the lineMatchList and stop looping for this line
                 if (runSearch(i, line.length(), line, fsm)){
-                    System.out.println(lineCounter + "   starting at char number =" + i);
+
+                    System.out.println(line);
                     //lineMatchList.add(lineCounter);
                     break;
                 }
@@ -46,8 +47,13 @@ public class REsearch {
 
                 if(currentState instanceof REstateFinish)
                 {
+                    //set flag to true, we can not return true because we still might end up in canNotMatch
                     gotToFinish = true;
-
+                }
+                else if(currentState instanceof REstateCanNotMatch)
+                {
+                    //we can not match this return false
+                    return false;
                 }
                 else if(currentState instanceof REstateBranching)
                 {

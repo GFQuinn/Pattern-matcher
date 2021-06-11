@@ -32,7 +32,20 @@ public class REcompile {
      E->T
      */
     private static REcompilerFiniteStateMachine expression(REcompilerFiniteStateMachine startingFSM) throws Exception {
-        if (pattern.charAt(currentIndex) == '|' && currentIndex != 0) {
+
+        if(pattern.charAt(currentIndex) == '!' )
+        {
+            currentIndex++;
+            REcompilerFiniteStateMachine newFSM = new REcompilerFiniteStateMachine(currentStateNumber);
+            currentStateNumber++;
+            newFSM =  expression(newFSM);
+
+
+            currentStateNumber = startingFSM.canNotMatch(newFSM, currentStateNumber);
+
+            return startingFSM;
+        }
+        else if (pattern.charAt(currentIndex) == '|' && currentIndex != 0) {
             currentIndex++;
 
             REcompilerFiniteStateMachine newFSM = new REcompilerFiniteStateMachine(currentStateNumber);
@@ -201,7 +214,7 @@ public class REcompile {
     }
 
     private static boolean isliteral() {
-        String nonLiteralList = "\\|*?+.()[]";
+        String nonLiteralList = "\\|*?+.()[]!";
         char currentChar = pattern.charAt(currentIndex);
         if (nonLiteralList.indexOf(currentChar) == -1) {
             return true;

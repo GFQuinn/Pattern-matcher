@@ -154,6 +154,28 @@ public class REcompilerFiniteStateMachine {
         return stateNumber;
     }
 
+    public int canNotMatch(REcompilerFiniteStateMachine newFSM,  int stateNumber) {
+
+        REstateBranching firstBranching = new REstateBranching(stateNumber);
+        stateNumber++;
+
+        //the branching state points to the start states of the fsm's and becomes the next start state
+        firstBranching.nextStateOne = newFSM.startState.stateNumber;
+        firstBranching.nextStatetwo = startState.stateNumber;
+        startState = firstBranching;
+
+        //the newFSM is the do not match fsm create a canNotMatch state to put at its end
+        REstateCanNotMatch canNotMatch = new REstateCanNotMatch(stateNumber);
+        stateNumber++;
+
+        newFSM.finishState.setBothNextStates(canNotMatch.stateNumber);
+        newFSM.finishState = canNotMatch;
+
+        states.addAll(newFSM.states);
+
+        return stateNumber;
+    }
+
     public void addFinishState(int stateNumber)
     {
         REstateFinish finishingState = new REstateFinish(stateNumber);
@@ -204,4 +226,6 @@ public class REcompilerFiniteStateMachine {
             state.dump();
         }
     }
+
+
 }
